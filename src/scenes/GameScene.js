@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
-import GameOverScene from './GameOverScene'
-import WinScene from './WinScene'
+// import GameOverScene from './GameOverScene'
+// import WinScene from './WinScene'
 
 
 const PLAYER_KEY = 'player'
@@ -26,12 +26,12 @@ export default class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.spritesheet(PLAYER_KEY, 'assets/hero.png', { frameWidth: 32, frameHeight: 32 })
-    this.load.spritesheet(ENEMY_KEY, 'assets/enemy.png', { frameWidth: 26, frameHeight: 30 })
-    this.load.image(TREASURE_KEY, 'assets/treasure.png')
+    this.load.spritesheet(PLAYER_KEY, '../assets/hero.png', { frameWidth: 32, frameHeight: 32 })
+    this.load.spritesheet(ENEMY_KEY, '../assets/enemy.png', { frameWidth: 26, frameHeight: 30 })
+    this.load.image(TREASURE_KEY, '../assets/treasure.png')
 
-    this.load.image('tiles', 'assets/tiles.png')
-    this.load.tilemapTiledJSON('dungeon', 'assets/maps/dungeon.json')
+    this.load.image('tiles', '../assets/tiles.png')
+    this.load.tilemapTiledJSON('dungeon', '../assets/maps/dungeon.json')
   }
 
   create() {
@@ -148,10 +148,10 @@ export default class GameScene extends Phaser.Scene {
       this.cameras.main.fade(250)
     }, [], this)
 
-    this.time.delayedCall(700, () => {
-      this.scene.start('WinScene', new WinScene(time))
-      time = 0
-    }, [], this)
+    // this.time.delayedCall(700, () => {
+    //   this.scene.start('WinScene', new WinScene(time))
+    //   time = 0
+    // }, [], this)
 
   }
 
@@ -167,10 +167,10 @@ export default class GameScene extends Phaser.Scene {
     }, [], this);
 
 
-    this.time.delayedCall(500, () => {
-      this.scene.launch('GameOverScene', new GameOverScene())
-      time = 0
-    }, [], this)
+    // this.time.delayedCall(500, () => {
+    //   this.scene.launch('GameOverScene', new GameOverScene())
+    //   time = 0
+    // }, [], this)
 
   }
 }

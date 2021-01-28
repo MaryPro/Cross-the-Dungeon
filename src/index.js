@@ -1,9 +1,9 @@
 import Phaser from 'phaser'
 
-import HelloWorldScene from './scenes/HelloWorldScene'
+// import HelloWorldScene from './scenes/HelloWorldScene'
 import GameScene from './scenes/GameScene'
-import GameOverScene from './scenes/GameOverScene'
-import WinScene from './scenes/WinScene'
+// import GameOverScene from './scenes/GameOverScene'
+// import WinScene from './scenes/WinScene'
 
 
 const config = {
@@ -17,7 +17,7 @@ const config = {
   scale: {
     zoom: 2
   },
-  scene: [GameScene, GameOverScene, WinScene]
+  scene: [GameScene]
 }
 
 export default new Phaser.Game(config)
