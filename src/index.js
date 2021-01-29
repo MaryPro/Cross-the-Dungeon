@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
 
-// import HelloWorldScene from './scenes/HelloWorldScene'
 import GameScene from './scenes/GameScene'
 // import GameOverScene from './scenes/GameOverScene'
 // import WinScene from './scenes/WinScene'
