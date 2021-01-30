@@ -40,7 +40,9 @@ export default class WinScene extends Phaser.Scene {
     this.add.text(110, 180, 'Click to restart ', { fontSize: '16px', color: '#ffff' })
 
     this.input.once('pointerdown', function () {
-      this.scene.start('GameScene', GameScene)
+      this.time.delayedCall(100, () => {
+        this.scene.start('GameScene', GameScene)
+      }, [], this)
     }, this);
   }
 

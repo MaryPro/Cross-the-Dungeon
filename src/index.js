@@ -14,7 +14,8 @@ const config = {
     arcade: { debug: false },
   },
   scale: {
-    zoom: 2
+    zoom: 2,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
   },
   scene: [GameScene, GameOverScene, WinScene]
 }

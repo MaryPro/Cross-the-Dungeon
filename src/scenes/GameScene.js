@@ -23,6 +23,7 @@ export default class GameScene extends Phaser.Scene {
     this.playerSpeed = 1.9
     this.enemyMaxY = 210
     this.enemyMinY = 30
+
   }
 
   preload() {
@@ -35,7 +36,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-
     const map = this.add.tilemap('dungeon')
     let tileset = map.addTilesetImage('dundeonT', 'tiles')
     //layers
@@ -59,6 +59,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
+
     if (!this.isPlayerAlive) {
       return;
     }
@@ -81,13 +82,21 @@ export default class GameScene extends Phaser.Scene {
     for (let i = 0; i < numEnemies; i++) {
       enemies[i].y += enemies[i].speed
       enemies[i].anims.play(ENEMY_KEY, true)
+      let randomTime = Math.random() * 2000 + 1000
 
       if (enemies[i].y >= this.enemyMaxY && enemies[i].speed > 0) {
         enemies[i].speed *= -1
+        if (enemies[i].visible) {
+          this.time.delayedCall(randomTime, () => {
+            enemies[i].setVisible(false)
+          }, [], this)
+        }
       } else if (enemies[i].y <= this.enemyMinY && enemies[i].speed < 0) {
         enemies[i].speed *= -1
+        enemies[i].setVisible(true)
       }
     }
+    
     if (timer.start) {
       time++
       timer.setText('Timer: ' + time)
@@ -133,8 +142,10 @@ export default class GameScene extends Phaser.Scene {
         key: ENEMY_KEY,
         frames: this.anims.generateFrameNumbers(ENEMY_KEY, { start: 0, end: 2 }),
         frameRate: 10,
-        repeat: -1
+        repeat: -1,
+        yoyo: true
       })
+
     })
 
     return enemies
@@ -143,10 +154,7 @@ export default class GameScene extends Phaser.Scene {
   winGame() {
     timer.start = false
     this.isPlayerWin = true
-
-    this.time.delayedCall(250, () => {
-      this.cameras.main.fade(250)
-    }, [], this)
+    this.physics.pause()
 
     this.time.delayedCall(700, () => {
       this.scene.start('WinScene', new WinScene(time))
@@ -156,8 +164,8 @@ export default class GameScene extends Phaser.Scene {
   }
 
   gameOver() {
-    this.isPlayerAlive = false;
     timer.start = false
+    this.isPlayerAlive = false;
     this.physics.pause()
 
     this.cameras.main.shake(500)
