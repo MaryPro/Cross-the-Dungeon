@@ -1,8 +1,8 @@
 import Phaser from 'phaser'
 
 import GameScene from './scenes/GameScene'
-// import GameOverScene from './scenes/GameOverScene'
-// import WinScene from './scenes/WinScene'
+import GameOverScene from './scenes/GameOverScene'
+import WinScene from './scenes/WinScene'
 
 
 const config = {
@@ -11,12 +11,12 @@ const config = {
   height: 240,
   physics: {
     default: 'arcade',
-    // arcade: { debug: true },
+    arcade: { debug: false },
   },
   scale: {
     zoom: 2
   },
-  scene: [GameScene]
+  scene: [GameScene, GameOverScene, WinScene]
 }
 
 export default new Phaser.Game(config)
