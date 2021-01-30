@@ -20,6 +20,8 @@ export default class WinScene extends Phaser.Scene {
     this.load.spritesheet('rocketBlue', 'assets/rocketBlue.png', { frameWidth: 7, frameHeight: 52 })
     this.load.spritesheet('fireworkOrange', 'assets/fireworkOrange.png', { frameWidth: 93, frameHeight: 92 })
     this.load.spritesheet('rocketOrange', 'assets/rocketOrange.png', { frameWidth: 7, frameHeight: 51 })
+    this.load.audio('blue', 'assets/audio/fireworkBlue.mp3')
+    this.load.audio('orange', 'assets/audio/fireworkOrange.mp3')
 
   }
 
@@ -31,10 +33,16 @@ export default class WinScene extends Phaser.Scene {
     this.rocketBlue = this.createRocket('rocketBlue', 80)
     this.rocketOrange = this.createRocket('rocketOrange', 270)
 
-
     this.fireworkBlue.anims.play('fireworkBlue', true)
     this.fireworkOrange.anims.play('fireworkOrange', true)
 
+    this.fireworkBlueSound = this.sound.add('blue')
+    this.fireworkBlueSound.play()
+    this.fireworkOrangeSound = this.sound.add('orange')
+    this.fireworkOrangeSound.play()
+
+
+    
     this.add.text(70, 60, 'You are AWESOME!', { fontSize: '25px', color: '#ffff' })
     this.add.text(110, 100, `Your time: ${fintime}ms`, { fontSize: '16px', color: '#ffff' })
     this.add.text(110, 180, 'Click to restart ', { fontSize: '16px', color: '#ffff' })
@@ -49,21 +57,26 @@ export default class WinScene extends Phaser.Scene {
   update() {
     if (this.rocketBlue.y > 80) {
       this.rocketBlue.anims.play('rocketBlue', true)
+      
     } else if (this.rocketBlue.y = 80) {
       this.rocketBlue.anims.play('rocketBlue', false)
       this.fireworkBlue.anims.play('fireworkBlue', true)
       this.rocketBlue.y = 300
-    }
+    }  
+    
+    // if (this.rocketBlue.y = 290) {
+    //   this.fireworkBlueSound.play()
+    // }
 
     if (this.fireworkBlue.anims.isPlaying) {
       this.rocketBlue.anims.play('rocketBlue', false)
-
     } else {
       this.rocketBlue.y -= 2
     }
 
     if (this.rocketOrange.y > 150) {
       this.rocketOrange.anims.play('rocketOrange', true)
+
     } else if (this.rocketOrange.y = 150) {
       this.rocketOrange.anims.play('rocketOrange', false)
       this.fireworkOrange.anims.play('fireworkOrange', true)

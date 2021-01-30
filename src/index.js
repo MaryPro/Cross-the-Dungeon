@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 
+import StartScene from './scenes/StartScene'
 import GameScene from './scenes/GameScene'
 import GameOverScene from './scenes/GameOverScene'
 import WinScene from './scenes/WinScene'
@@ -17,7 +18,7 @@ const config = {
     zoom: 2,
     autoCenter: Phaser.Scale.CENTER_BOTH,
   },
-  scene: [GameScene, GameOverScene, WinScene]
+  scene: [StartScene, GameScene, GameOverScene, WinScene]
 }
 
 export default new Phaser.Game(config)

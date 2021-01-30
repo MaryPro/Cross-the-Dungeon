@@ -11,7 +11,6 @@ let timer = {
   start: false
 }
 
-
 export default class GameScene extends Phaser.Scene {
   constructor() {
     super({ key: 'GameScene' })
@@ -33,6 +32,12 @@ export default class GameScene extends Phaser.Scene {
 
     this.load.image('tiles', '/assets/tiles.png')
     this.load.tilemapTiledJSON('dungeon', '/assets/maps/dungeon.json')
+    this.load.audio('run', 'assets/audio/435853__dersuperanton__running-loud.mp3')
+    this.load.audio('die', 'assets/audio/266218__montblanccandies__scream-5.wav')
+    this.load.audio('win', 'assets/audio/220184__gameaudio__win-spacey.wav')
+
+
+
   }
 
   create() {
@@ -56,10 +61,14 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.resetFX()
 
     timer = this.add.text(16, 16, 'Timer: ' + time, { fontSize: '16px', fill: '#ffff' })
+
+    this.runSound = this.sound.add('run')
+    this.dieSound = this.sound.add('die')
+    this.winSound = this.sound.add('win')
+
   }
 
   update() {
-
     if (!this.isPlayerAlive) {
       return;
     }
@@ -70,11 +79,19 @@ export default class GameScene extends Phaser.Scene {
     }
 
     if (this.input.activePointer.isDown) {
+
       this.player.x += this.playerSpeed
       this.player.anims.play('run', true)
+
+      if (!this.runSound.isPlaying) {
+        this.runSound.play()
+      }
+      this.runSound.resume()
+
       timer.start = true
     } else {
       this.player.anims.play('stay')
+      this.runSound.pause()
     }
     let enemies = this.enemies.getChildren()
     let numEnemies = enemies.length
@@ -96,7 +113,7 @@ export default class GameScene extends Phaser.Scene {
         enemies[i].setVisible(true)
       }
     }
-    
+
     if (timer.start) {
       time++
       timer.setText('Timer: ' + time)
@@ -155,11 +172,16 @@ export default class GameScene extends Phaser.Scene {
     timer.start = false
     this.isPlayerWin = true
     this.physics.pause()
+    this.winSound.play()
 
     this.time.delayedCall(700, () => {
       this.scene.start('WinScene', new WinScene(time))
       time = 0
+
     }, [], this)
+
+    this.runSound.stop()
+
 
   }
 
@@ -176,9 +198,12 @@ export default class GameScene extends Phaser.Scene {
 
 
     this.time.delayedCall(500, () => {
-      this.scene.launch('GameOverScene', new GameOverScene())
+      this.scene.start('GameOverScene', new GameOverScene())
       time = 0
     }, [], this)
+
+    this.dieSound.play()
+    this.runSound.stop()
 
   }
 }
