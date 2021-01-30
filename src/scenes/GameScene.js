@@ -18,8 +18,7 @@ export default class GameScene extends Phaser.Scene {
     this.player = undefined
     this.enemies = undefined
     this.treasure = undefined
-    // this.timer = 0
-    this.playerSpeed = 1.9
+    this.playerSpeed = 1.7
     this.enemyMaxY = 210
     this.enemyMinY = 30
 
@@ -29,21 +28,18 @@ export default class GameScene extends Phaser.Scene {
     this.load.spritesheet(PLAYER_KEY, '/assets/hero.png', { frameWidth: 32, frameHeight: 32 })
     this.load.spritesheet(ENEMY_KEY, '/assets/enemy.png', { frameWidth: 26, frameHeight: 30 })
     this.load.image(TREASURE_KEY, '/assets/treasure.png')
-
     this.load.image('tiles', '/assets/tiles.png')
     this.load.tilemapTiledJSON('dungeon', '/assets/maps/dungeon.json')
+
     this.load.audio('run', 'assets/audio/435853__dersuperanton__running-loud.mp3')
     this.load.audio('die', 'assets/audio/266218__montblanccandies__scream-5.wav')
     this.load.audio('win', 'assets/audio/220184__gameaudio__win-spacey.wav')
-
-
-
   }
 
   create() {
     const map = this.add.tilemap('dungeon')
     let tileset = map.addTilesetImage('dundeonT', 'tiles')
-    //layers
+
     map.createLayer('floor', tileset)
     map.createLayer('wall', tileset)
 
@@ -72,6 +68,7 @@ export default class GameScene extends Phaser.Scene {
     if (!this.isPlayerAlive) {
       return;
     }
+
     if (this.isPlayerWin) {
       this.player.anims.play('stay')
       this.player.y -= 2
@@ -79,7 +76,6 @@ export default class GameScene extends Phaser.Scene {
     }
 
     if (this.input.activePointer.isDown) {
-
       this.player.x += this.playerSpeed
       this.player.anims.play('run', true)
 
@@ -93,6 +89,7 @@ export default class GameScene extends Phaser.Scene {
       this.player.anims.play('stay')
       this.runSound.pause()
     }
+
     let enemies = this.enemies.getChildren()
     let numEnemies = enemies.length
 
@@ -173,22 +170,21 @@ export default class GameScene extends Phaser.Scene {
     this.isPlayerWin = true
     this.physics.pause()
     this.winSound.play()
+    this.runSound.stop()
 
     this.time.delayedCall(700, () => {
       this.scene.start('WinScene', new WinScene(time))
       time = 0
 
     }, [], this)
-
-    this.runSound.stop()
-
-
   }
 
   gameOver() {
     timer.start = false
     this.isPlayerAlive = false;
     this.physics.pause()
+    this.dieSound.play()
+    this.runSound.stop()
 
     this.cameras.main.shake(500)
 
@@ -201,10 +197,5 @@ export default class GameScene extends Phaser.Scene {
       this.scene.start('GameOverScene', new GameOverScene())
       time = 0
     }, [], this)
-
-    this.dieSound.play()
-    this.runSound.stop()
-
   }
 }
-

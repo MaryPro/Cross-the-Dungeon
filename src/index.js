@@ -5,7 +5,6 @@ import GameScene from './scenes/GameScene'
 import GameOverScene from './scenes/GameOverScene'
 import WinScene from './scenes/WinScene'
 
-
 const config = {
   type: Phaser.AUTO,
   width: 384,
