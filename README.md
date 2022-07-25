@@ -18,13 +18,12 @@ Attention! There will be no turning back!
 
 ## Built With
 - JavaScript
-- A bit of HTML and CSS for the front end
+- A bit of HTML and CSS for the frontend
+- Node.js
+- Express
+- Webpack
 - Phaser 3
 - Tiled
-- Webpack
-- Express
-- Node
-- NPM
 - Github
 - Heroku for the deployment
 
