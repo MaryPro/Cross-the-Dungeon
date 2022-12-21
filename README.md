@@ -13,9 +13,6 @@ Attention! There will be no turning back!
 
 [Video Link](https://youtu.be/spLfM_iG-p8)
 
-## Live version
-[Play Now!](https://cross-the-dungeon.herokuapp.com/)
-
 ## Built With
 - JavaScript
 - A bit of HTML and CSS for the frontend
